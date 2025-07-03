@@ -54,7 +54,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kineticapps/icons.git"
+    "url": "git+https://github.com/kinetic-apps/icons.git"
   },
   "keywords": [
     "icons",
@@ -66,9 +66,9 @@
   "author": "Kinetic Apps",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kineticapps/icons/issues"
+    "url": "https://github.com/kinetic-apps/icons/issues"
   },
-  "homepage": "https://github.com/kineticapps/icons#readme",
+  "homepage": "https://github.com/kinetic-apps/icons#readme",
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-native-svg": ">=12.0.0"
