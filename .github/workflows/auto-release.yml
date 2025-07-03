@@ -33,6 +33,11 @@ jobs:
       - name: Install dependencies
         run: npm install
         
+      - name: Configure npm for GitHub Packages
+        run: |
+          echo "@kinetic-apps:registry=https://npm.pkg.github.com" >> ~/.npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
+          
       - name: Build package
         run: npm run build
         timeout-minutes: 15
@@ -41,4 +46,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release

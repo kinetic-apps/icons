@@ -35,6 +35,7 @@ Thumbs.db
 yarn.lock
 package-lock.json
 pnpm-lock.yaml
+.npmrc
 
 # Test apps (not for distribution)
 test-app/

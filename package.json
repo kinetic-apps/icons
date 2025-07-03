@@ -1,5 +1,5 @@
 {
-  "name": "@kineticapps/icons",
+  "name": "@kinetic-apps/icons",
   "version": "0.0.0",
   "description": "Kinetic Apps icon library",
   "main": "dist/index.js",
