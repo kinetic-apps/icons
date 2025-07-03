@@ -4,15 +4,23 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   release:
+    name: Release
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      packages: write
+      contents: write      # to publish a GitHub release
+      issues: write        # to comment on released issues
+      pull-requests: write # to comment on released PRs
+      id-token: write      # for npm provenance
+      packages: write      # for GitHub Packages
       
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       
