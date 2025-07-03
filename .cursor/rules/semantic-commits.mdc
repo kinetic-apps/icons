@@ -1,0 +1,85 @@
+---
+description: Enforce semantic commit messages for automatic versioning and releases
+globs: 
+alwaysApply: true
+---
+
+# Semantic Commit Rules
+
+This project uses semantic-release for automatic versioning. All commits MUST follow the Conventional Commits specification.
+
+## Commit Format
+```
+<type>(<scope>): <subject>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+## Types That Trigger Releases
+
+### `feat:` - New Feature (Minor Version Bump)
+```bash
+# 0.1.0 → 0.2.0
+git commit -m "feat: add weather icon set"
+git commit -m "feat(icons): add 50 new solid variants"
+```
+
+### `fix:` - Bug Fix (Patch Version Bump)
+```bash
+# 0.1.0 → 0.1.1
+git commit -m "fix: correct arrow icon alignment"
+git commit -m "fix(react-native): resolve SVG rendering issue"
+```
+
+### Breaking Changes (Major Version Bump)
+```bash
+# 0.1.0 → 1.0.0
+git commit -m "feat!: rename all icon components"
+git commit -m "feat: update naming convention
+
+BREAKING CHANGE: All icons now use camelCase"
+```
+
+## Types That DON'T Trigger Releases
+- `docs:` - Documentation changes
+- `style:` - Code formatting
+- `refactor:` - Code refactoring
+- `perf:` - Performance improvements
+- `test:` - Test updates
+- `chore:` - Maintenance tasks
+- `ci:` - CI/CD changes
+- `build:` - Build system changes
+
+## Optional Scopes
+- `icons` - Icon file changes
+- `react` - React-specific changes
+- `react-native` - React Native-specific changes
+- `build` - Build process changes
+- `types` - TypeScript changes
+
+## Examples
+
+✅ **GOOD** - Proper semantic commits:
+```bash
+git commit -m "feat: add shopping cart and payment icons"
+git commit -m "fix: correct viewBox for small icons"
+git commit -m "docs: update React Native installation guide"
+git commit -m "chore: update dependencies"
+```
+
+❌ **BAD** - These won't work:
+```bash
+git commit -m "Updated icons"
+git commit -m "WIP"
+git commit -m "fixes"
+```
+
+## Quick Reference
+- Adding new icons? → `feat:`
+- Fixing existing icons? → `fix:`
+- Updating docs? → `docs:`
+- Breaking changes? → Add `!` or use `BREAKING CHANGE:`
+
+Remember: The subject should be lowercase, imperative mood ("add" not "added"), and no period at the end.
