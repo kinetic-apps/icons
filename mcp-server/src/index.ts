@@ -1,4 +1,3 @@
-// Import icon names without React dependency
 import { iconNames } from "./iconList";
 
 interface MCPRequest {
@@ -321,6 +320,9 @@ async function handleRequest(request: MCPRequest): Promise<MCPResponse> {
 
 export default {
   async fetch(request: Request): Promise<Response> {
+    const url = new URL(request.url);
+    
+    // Handle CORS
     if (request.method === "OPTIONS") {
       return new Response(null, {
         headers: {
@@ -331,41 +333,117 @@ export default {
       });
     }
 
-    const url = new URL(request.url);
-    
-    // Handle SSE endpoint
-    if (url.pathname === "/sse") {
-      const encoder = new TextEncoder();
-      let keepAliveInterval: any;
-      
-      const stream = new ReadableStream({
-        async start(controller) {
-          // Send initial ping
-          controller.enqueue(encoder.encode(": ping\n\n"));
-          
-          // Keep connection alive
-          keepAliveInterval = setInterval(() => {
-            controller.enqueue(encoder.encode(": ping\n\n"));
-          }, 30000);
-        },
-        cancel() {
-          if (keepAliveInterval) {
-            clearInterval(keepAliveInterval);
-          }
-        }
-      });
-      
-      return new Response(stream, {
+    // Handle OAuth discovery endpoints - tell clients no auth is required
+    if (url.pathname === "/.well-known/oauth-protected-resource") {
+      return new Response(JSON.stringify({
+        resource: url.origin + "/sse",
+        oauth_required: false
+      }), {
         headers: {
-          "Content-Type": "text/event-stream",
-          "Cache-Control": "no-cache",
-          "Connection": "keep-alive",
+          "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*"
         }
       });
     }
     
-    // Handle JSON-RPC requests
+    if (url.pathname === "/.well-known/oauth-authorization-server/sse") {
+      // Return 404 to indicate no OAuth server for this endpoint
+      return new Response("Not Found", {
+        status: 404,
+        headers: {
+          "Content-Type": "text/plain",
+          "Access-Control-Allow-Origin": "*"
+        }
+      });
+    }
+
+    // Handle SSE endpoint for MCP
+    if (url.pathname === "/sse") {
+      const encoder = new TextEncoder();
+      
+      // Check if this is an OAuth/auth check request
+      const acceptHeader = request.headers.get("accept") || "";
+      if (acceptHeader.includes("application/json")) {
+        // Return JSON response for auth checks
+        return new Response(JSON.stringify({
+          error: "This server does not require authentication"
+        }), {
+          status: 400,
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*"
+          }
+        });
+      }
+      
+      // For GET requests, establish SSE stream
+      if (request.method === "GET") {
+        let keepAliveInterval: any;
+        
+        const stream = new ReadableStream({
+          start(controller) {
+            // Keep connection alive
+            keepAliveInterval = setInterval(() => {
+              controller.enqueue(encoder.encode(": ping\n\n"));
+            }, 30000);
+          },
+          cancel() {
+            if (keepAliveInterval) {
+              clearInterval(keepAliveInterval);
+            }
+          }
+        });
+        
+        return new Response(stream, {
+          headers: {
+            "Content-Type": "text/event-stream",
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "Access-Control-Allow-Origin": "*",
+            "X-Accel-Buffering": "no"
+          }
+        });
+      }
+      
+      // For POST requests, handle MCP messages
+      if (request.method === "POST") {
+        try {
+          const body = await request.json();
+          const response = await handleRequest(body);
+          
+          // Return as SSE format
+          const sseMessage = `data: ${JSON.stringify(response)}\n\n`;
+          
+          return new Response(sseMessage, {
+            headers: {
+              "Content-Type": "text/event-stream",
+              "Cache-Control": "no-cache",
+              "Access-Control-Allow-Origin": "*"
+            }
+          });
+        } catch (error) {
+          const errorResponse = {
+            jsonrpc: "2.0",
+            id: null,
+            error: {
+              code: -32700,
+              message: "Parse error"
+            }
+          };
+          
+          const sseMessage = `data: ${JSON.stringify(errorResponse)}\n\n`;
+          return new Response(sseMessage, {
+            status: 400,
+            headers: {
+              "Content-Type": "text/event-stream",
+              "Access-Control-Allow-Origin": "*"
+            }
+          });
+        }
+      }
+    }
+    
+    // Handle regular JSON-RPC endpoint
     if (request.method === "POST" && request.headers.get("content-type")?.includes("application/json")) {
       try {
         const body = await request.json() as MCPRequest;
@@ -393,6 +471,21 @@ export default {
           }
         });
       }
+    }
+    
+    // Default response - check if JSON is expected
+    const acceptHeader = request.headers.get("accept") || "";
+    if (acceptHeader.includes("application/json")) {
+      return new Response(JSON.stringify({
+        error: "Invalid endpoint",
+        message: "MCP Server is running. Use /sse for SSE transport."
+      }), {
+        status: 404,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        }
+      });
     }
     
     return new Response("MCP Server is running", {

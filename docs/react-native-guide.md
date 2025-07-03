@@ -602,5 +602,5 @@ function MixedIcons() {
 
 - Explore the [TypeScript Guide](./typescript-guide.md) for advanced type usage
 - Check out [Examples](./examples.md) for more use cases
-- Read the [Contributing Guide](./contributing.md) to add new icons
+- Read the [Icon Development Guide](./icon-development.md) to add new icons
 - View the [Performance Guide](./performance.md) for optimization tips

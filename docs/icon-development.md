@@ -210,7 +210,7 @@ npm start
 - [ ] No console errors
 - [ ] Icon is centered properly
 
-## Submitting Changes
+## Committing Changes
 
 ### Commit Guidelines
 
@@ -223,52 +223,17 @@ git commit -m "feat: add shopping-cart and shopping-bag icons"
 git commit -m "fix: correct alignment for arrow-right icon"
 
 # Updating documentation
-git commit -m "docs: update contributing guide"
+git commit -m "docs: update icon development guide"
 ```
 
-### Pull Request Process
+### Pushing Changes
 
-1. **Update your branch**:
-   ```bash
-   git fetch upstream
-   git rebase upstream/main
-   ```
-
-2. **Push your changes**:
+1. **Push your changes**:
    ```bash
    git push origin your-branch-name
    ```
 
-3. **Create Pull Request**:
-   - Title: Clear description of changes
-   - Description: List all icons added/modified
-   - Screenshots: Include screenshots from both test apps
-   - Checklist: Complete the PR checklist
-
-### PR Template
-
-```markdown
-## Description
-Brief description of the changes
-
-## Icons Added/Modified
-- [ ] icon-name-1 (line & solid)
-- [ ] icon-name-2 (line & solid)
-
-## Screenshots
-### React
-[Screenshot from test-app]
-
-### React Native
-[Screenshot from expo-test-app]
-
-## Checklist
-- [ ] Icons follow design guidelines
-- [ ] Both variants included
-- [ ] Tested in both test apps
-- [ ] Build succeeds
-- [ ] No linting errors
-```
+2. **Create a merge request or notify the team about your changes**
 
 ## Code Style
 
@@ -305,13 +270,5 @@ Before submitting, optimize your SVGs:
 
 - Check existing icons for examples
 - Review the [Icon Guidelines](#icon-guidelines)
-- Open an issue for questions
-- Join discussions in pull requests
-
-## Thank You!
-
-Your contributions make this library better for everyone. Thank you for taking the time to contribute!
-
-🤖 Generated with [Claude Code](https://claude.ai/code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>
+- Ask the team in Slack
+- Check the design system documentation

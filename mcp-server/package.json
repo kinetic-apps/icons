@@ -9,7 +9,9 @@
     "cf-typegen": "wrangler types"
   },
   "dependencies": {
-    "@kineticapps/icons": "file:.."
+    "@kineticapps/icons": "file:..",
+    "@modelcontextprotocol/sdk": "^1.14.0",
+    "zod": "^3.25.71"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250115.1",

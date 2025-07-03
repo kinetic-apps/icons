@@ -1,14 +1,12 @@
-  {
-    "mcpServers": {
-      "cloudflare-workers": {
-        "command": "npx",
-        "args": ["mcp-remote",
-  "https://bindings.mcp.cloudflare.com/sse"]
-      },
-      "cloudflare-builds": {
-        "command": "npx",
-        "args": ["mcp-remote",
-  "https://builds.mcp.cloudflare.com/sse"]
-      }
+{
+  "mcpServers": {
+    "kinetic-icons": {
+      "type": "sse",
+      "url": "https://kinetic-icons-mcp-server.raspy-hill-ac75.workers.dev/sse"
+    },
+    "kinetic-icons-dev": {
+      "type": "sse", 
+      "url": "http://localhost:8787/sse"
     }
   }
+}

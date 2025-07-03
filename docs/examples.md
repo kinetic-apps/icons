@@ -711,4 +711,4 @@ function Rating({ value, onChange, max = 5 }) {
 - Explore the [React Guide](./react-guide.md) for platform-specific patterns
 - Check the [React Native Guide](./react-native-guide.md) for mobile examples
 - Review the [TypeScript Guide](./typescript-guide.md) for type-safe examples
-- Read the [Contributing Guide](./contributing.md) to add new examples
+- Read the [Icon Development Guide](./icon-development.md) to add new examples

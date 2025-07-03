@@ -297,14 +297,16 @@ npm install
 npm start
 ```
 
-## Contributing
+## Development
 
-We welcome contributions! When contributing:
+For internal development:
 
 1. Follow the existing icon naming conventions
 2. Ensure icons work on both React and React Native
 3. Test your changes in both test apps
 4. Update documentation if needed
+
+See the [Icon Development Guide](./docs/icon-development.md) for detailed instructions.
 
 ## License
 
