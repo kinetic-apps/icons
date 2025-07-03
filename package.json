@@ -45,7 +45,6 @@
     "build:native": "node scripts/build-icons-native.js",
     "build:package": "tsup",
     "clean": "rm -rf dist src/components src/components-rn src/icon-data src/icons-native",
-    "prepublishOnly": "npm run build",
     "release": "semantic-release"
   },
   "publishConfig": {
