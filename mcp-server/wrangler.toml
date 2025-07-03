@@ -1,0 +1,15 @@
+name = "kinetic-icons-mcp-server"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+account_id = "36e74568d98e718ad7cc3576dc5724f2"
+
+[build]
+command = ""
+
+[build.upload]
+rules = [
+  { type = "ESModule", globs = ["**/*.js", "**/*.mjs", "**/*.ts"], fallthrough = true }
+]
+
+[observability]
+enabled = true

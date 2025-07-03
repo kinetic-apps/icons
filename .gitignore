@@ -5,6 +5,8 @@ node_modules/
 dist/
 src/components/
 src/native/
+src/icons-native/
+src/icon-data/
 
 # Logs
 *.log
@@ -33,3 +35,13 @@ Thumbs.db
 yarn.lock
 package-lock.json
 pnpm-lock.yaml
+
+# Test apps (not for distribution)
+test-app/
+expo-test-app/
+reference-repos/
+
+# Generated files
+*.generated.ts
+*.generated.tsx
+*.generated.js

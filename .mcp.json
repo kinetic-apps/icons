@@ -1,0 +1,14 @@
+  {
+    "mcpServers": {
+      "cloudflare-workers": {
+        "command": "npx",
+        "args": ["mcp-remote",
+  "https://bindings.mcp.cloudflare.com/sse"]
+      },
+      "cloudflare-builds": {
+        "command": "npx",
+        "args": ["mcp-remote",
+  "https://builds.mcp.cloudflare.com/sse"]
+      }
+    }
+  }

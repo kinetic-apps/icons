@@ -4,15 +4,12 @@ const { glob } = require('glob');
 const { transform } = require('@svgr/core');
 
 const ICONS_DIR = path.join(__dirname, '../icons');
-const OUTPUT_DIR = path.join(__dirname, '../src/components');
-
-// Check if we're building for React Native
-const isNative = process.env.BUILD_TARGET === 'native';
+const OUTPUT_DIR = path.join(__dirname, '../src/components-rn');
 
 const svgrConfig = {
   typescript: true,
   prettier: true,
-  native: isNative, // This tells SVGR to use react-native-svg imports
+  native: true, // Generate React Native SVG components
   plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx', '@svgr/plugin-prettier'],
   svgoConfig: {
     plugins: [
@@ -45,7 +42,7 @@ function toCamelCase(str, pascalCase = false) {
 }
 
 async function buildIcons() {
-  console.log('Building icons...');
+  console.log('Building React Native icons...');
 
   // Clean output directory
   await fs.emptyDir(OUTPUT_DIR);
@@ -80,29 +77,37 @@ async function buildIcons() {
     });
 
     // Post-process to add custom props
-    // Ensure imports are correct
-    if (isNative) {
-      // For React Native, ensure we have the right imports
-      componentCode = componentCode.replace(
-        /import \* as React from "react";(\nimport .* from "react-native-svg";)?/,
-        `import * as React from "react";\nimport Svg, { Path, Circle, Rect, G, Line, Polyline, Polygon, Ellipse, Defs, Stop, LinearGradient, RadialGradient, ClipPath, Mask, Pattern, Use, Symbol, Text, TSpan, TextPath, type SvgProps } from "react-native-svg";`
-      );
+    // Fix imports - SVGR with native:true sometimes doesn't import all needed components
+    const svgElements = new Set();
+    if (componentCode.includes('<Svg')) svgElements.add('Svg');
+    if (componentCode.includes('<Path')) svgElements.add('Path');
+    if (componentCode.includes('<Circle')) svgElements.add('Circle');
+    if (componentCode.includes('<Rect')) svgElements.add('Rect');
+    if (componentCode.includes('<G')) svgElements.add('G');
+    if (componentCode.includes('<Line')) svgElements.add('Line');
+    if (componentCode.includes('<Polyline')) svgElements.add('Polyline');
+    if (componentCode.includes('<Polygon')) svgElements.add('Polygon');
+    if (componentCode.includes('<Ellipse')) svgElements.add('Ellipse');
+    
+    const elementsToImport = Array.from(svgElements).join(', ');
+    
+    // Remove any existing react-native-svg imports
+    componentCode = componentCode.replace(/import .* from "react-native-svg";(\n)?/g, '');
+    
+    // Add the correct import at the top
+    if (!componentCode.includes('import * as React')) {
+      componentCode = `import * as React from "react";\nimport { ${elementsToImport}, type SvgProps } from "react-native-svg";\n${componentCode}`;
     } else {
       componentCode = componentCode.replace(
-        /import \* as React from "react";(\nimport type { SVGProps } from "react";)?/,
-        `import * as React from "react";\nimport type { SVGProps } from "react";`
+        'import * as React from "react";',
+        `import * as React from "react";\nimport { ${elementsToImport}, type SvgProps } from "react-native-svg";`
       );
     }
     
     // Replace the function signature
-    const propsType = isNative ? 'SvgProps' : 'SVGProps<SVGSVGElement>';
-    const searchPattern = isNative 
-      ? /const (\w+) = \(props: SvgProps\)/
-      : /const (\w+) = \(props: SVGProps<SVGSVGElement>\)/;
-    
     componentCode = componentCode.replace(
-      searchPattern,
-      (match, name) => `export interface ${name}Props extends ${propsType} {
+      /const (\w+) = \(props: SvgProps\)/,
+      (match, name) => `export interface ${name}Props extends SvgProps {
   size?: number | string;
   color?: string;
   strokeWidth?: number | string;
@@ -111,12 +116,10 @@ async function buildIcons() {
 const ${name} = ({ size = 24, color = 'currentColor', strokeWidth = 1.5, ...props }: ${name}Props)`
     );
     
-    // Add size attributes to SVG/Svg element
-    const svgTag = isNative ? 'Svg' : 'svg';
-    const svgPattern = new RegExp(`<${svgTag}([^>]*)\\{\\.\\.\\.props\\}>`);
+    // Add size attributes to Svg element
     componentCode = componentCode.replace(
-      svgPattern,
-      `<${svgTag}$1width={size} height={size} {...props}>`
+      /<Svg([^>]*)\{\.\.\.props\}>/,
+      '<Svg$1width={size} height={size} {...props}>'
     );
     
     // Replace color attributes with the color prop
@@ -127,6 +130,8 @@ const ${name} = ({ size = 24, color = 'currentColor', strokeWidth = 1.5, ...prop
       componentCode = componentCode.replace(/stroke="currentColor"/g, 'stroke={color}');
       componentCode = componentCode.replace(/stroke="#[0-9A-Fa-f]{6}"/g, 'stroke={color}');
       componentCode = componentCode.replace(/stroke="#[0-9A-Fa-f]{3}"/g, 'stroke={color}');
+      // Also handle strokeWidth
+      componentCode = componentCode.replace(/strokeWidth="[0-9.]+"/g, 'strokeWidth={strokeWidth}');
     }
 
     // Create component file
@@ -207,7 +212,7 @@ export const iconMetadata = ${JSON.stringify(allIcons, null, 2)};
 
   await fs.writeFile(path.join(OUTPUT_DIR, 'index.ts'), mainIndexContent.trim());
 
-  console.log('Icons built successfully!');
+  console.log('React Native icons built successfully!');
   console.log(`Total icons processed: ${allIcons.length}`);
 }
 
