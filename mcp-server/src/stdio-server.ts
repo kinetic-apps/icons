@@ -19,7 +19,7 @@ class KineticIconsMCPServer {
     this.server = new Server(
       {
         name: 'kinetic-icons-mcp-server',
-        version: '1.0.0',
+        version: '1.0.8',
       },
       {
         capabilities: {

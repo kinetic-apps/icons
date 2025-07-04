@@ -93,30 +93,11 @@ async function handleTool(name: string, args: any): Promise<any> {
       const category = args?.category || "all";
       const icons = iconNames;
       
-      let filteredIcons = icons;
-      
-      if (category === "line") {
-        filteredIcons = icons.filter(name => name.endsWith("1_5"));
-      } else if (category === "solid") {
-        filteredIcons = icons.filter(name => name.endsWith("Solid"));
-      }
-      
-      const baseNames = new Set<string>();
-      
-      filteredIcons.forEach(icon => {
-        let baseName = icon;
-        if (icon.endsWith("1_5")) {
-          baseName = icon.slice(0, -3);
-        } else if (icon.endsWith("Solid")) {
-          baseName = icon.slice(0, -5);
-        }
-        baseNames.add(baseName);
-      });
-      
+      // Icons are now stored as clean camelCase names, no need to filter by suffix
       return {
-        totalIcons: baseNames.size,
+        totalIcons: icons.length,
         category,
-        icons: Array.from(baseNames).sort()
+        icons: icons.sort()
       };
     }
     
@@ -124,22 +105,10 @@ async function handleTool(name: string, args: any): Promise<any> {
       const searchTerm = args.keyword.toLowerCase();
       const icons = iconNames;
       
-      const baseNames = new Set<string>();
-      
-      icons.forEach(icon => {
-        let baseName = icon;
-        if (icon.endsWith("1_5")) {
-          baseName = icon.slice(0, -3);
-        } else if (icon.endsWith("Solid")) {
-          baseName = icon.slice(0, -5);
-        }
-        
-        if (baseName.toLowerCase().includes(searchTerm)) {
-          baseNames.add(baseName);
-        }
-      });
-      
-      const results = Array.from(baseNames).sort();
+      // Icons are now stored as clean camelCase names, search directly
+      const results = icons.filter(icon => 
+        icon.toLowerCase().includes(searchTerm)
+      ).sort();
       
       return {
         searchTerm: args.keyword,
@@ -228,36 +197,33 @@ async function handleTool(name: string, args: any): Promise<any> {
     
     case "get_icon_usage_example": {
       const icons = iconNames;
-      const baseName = args.iconName;
+      const iconName = args.iconName;
       
-      const hasLine = icons.includes(`${baseName}1_5`);
-      const hasSolid = icons.includes(`${baseName}Solid`);
-      
-      if (!hasLine && !hasSolid && !icons.includes(baseName)) {
+      if (!icons.includes(iconName)) {
         throw new Error(`Icon "${args.iconName}" not found. Use 'search_icons' to find available icons.`);
       }
       
       return {
         iconName: args.iconName,
         availableVariants: {
-          line: hasLine,
-          solid: hasSolid
+          line: true,
+          solid: false
         },
         installation: "npm install kinetic-icons-library",
         import: "import { Icon } from 'kinetic-icons-library';",
         examples: {
-          basic: `<Icon name="${baseName}" />`,
-          withSize: `<Icon name="${baseName}" size="lg" />`,
-          withColor: `<Icon name="${baseName}" color="#3B82F6" />`,
-          withVariant: hasSolid ? `<Icon name="${baseName}" variant="solid" />` : null,
-          customSize: `<Icon name="${baseName}" size={32} />`,
-          withHandler: `<Icon name="${baseName}" onPress={() => console.log('Clicked!')} />`,
-          styled: `<Icon name="${baseName}" style={{ marginRight: 8 }} />`
+          basic: `<Icon name="${iconName}" />`,
+          withSize: `<Icon name="${iconName}" size="lg" />`,
+          withColor: `<Icon name="${iconName}" color="#3B82F6" />`,
+          withVariant: null,
+          customSize: `<Icon name="${iconName}" size={32} />`,
+          withHandler: `<Icon name="${iconName}" onPress={() => console.log('Clicked!')} />`,
+          styled: `<Icon name="${iconName}" style={{ marginRight: 8 }} />`
         },
         directImport: {
-          line: hasLine ? `import { ${baseName}1_5 } from 'kinetic-icons-library';` : null,
-          solid: hasSolid ? `import { ${baseName}Solid } from 'kinetic-icons-library';` : null,
-          usage: `<${baseName}1_5 size={24} color="blue" />`
+          line: `import { ${iconName}1_5 } from 'kinetic-icons-library';`,
+          solid: null,
+          usage: `<${iconName}1_5 size={24} color="blue" />`
         }
       };
     }
