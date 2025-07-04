@@ -1,6 +1,6 @@
 {
-  "name": "kinetic-icons-library",
-  "version": "1.0.4",
+  "name": "@kinetic-apps/icons",
+  "version": "1.0.5",
   "description": "Kinetic Apps icon library",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -29,6 +29,7 @@
     "src/index.native.ts",
     "src/native-wrapper.tsx",
     "src/Icon.native.tsx",
+    "src/createKineticIcon.tsx",
     "src/icons-native/**/*",
     "src/hooks/**/*",
     "src/utils/**/*",
@@ -48,6 +49,7 @@
     "release": "semantic-release"
   },
   "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
     "access": "public"
   },
   "repository": {

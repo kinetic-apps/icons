@@ -17,9 +17,8 @@ export default defineConfig([
     minify: false,
     external: ['react', 'react-native-svg'],
     esbuildOptions(options) {
-      options.banner = {
-        js: '"use client"',
-      };
+      // Remove the banner to avoid "use client" warnings
+      options.banner = {};
     },
   },
   // Individual icon files for tree-shaking
@@ -35,9 +34,8 @@ export default defineConfig([
     external: ['react', 'react-native-svg'],
     outDir: 'dist/icons',
     esbuildOptions(options) {
-      options.banner = {
-        js: '"use client"',
-      };
+      // Remove the banner to avoid "use client" warnings
+      options.banner = {};
     },
   },
 ]);
