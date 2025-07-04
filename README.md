@@ -1,4 +1,4 @@
-# @kineticapps/icons
+# @kinetic-apps/icons
 
 A comprehensive icon library for React and React Native applications, featuring over 2,300+ beautifully crafted icons in line and solid variants.
 
@@ -16,18 +16,18 @@ A comprehensive icon library for React and React Native applications, featuring 
 This is a private package published to GitHub Packages. First, configure your `.npmrc`:
 
 ```bash
-echo "@kineticapps:registry=https://npm.pkg.github.com" >> .npmrc
+echo "@kinetic-apps:registry=https://npm.pkg.github.com" >> .npmrc
 echo "//npm.pkg.github.com/:_authToken=${GITHUB_PACKAGES_TOKEN}" >> .npmrc
 ```
 
 Then install:
 
 ```bash
-npm install @kineticapps/icons
+npm install @kinetic-apps/icons
 # or
-yarn add @kineticapps/icons
+yarn add @kinetic-apps/icons
 # or
-pnpm add @kineticapps/icons
+pnpm add @kinetic-apps/icons
 ```
 
 ### Peer Dependencies
@@ -42,7 +42,7 @@ npm install react-native-svg
 ### React (Web)
 
 ```jsx
-import { Icon } from '@kineticapps/icons';
+import { Icon } from '@kinetic-apps/icons';
 
 // Using the Icon component with dynamic icon names
 function MyComponent() {
@@ -59,7 +59,7 @@ function MyComponent() {
 ### React Native
 
 ```jsx
-import { Icon } from '@kineticapps/icons';
+import { Icon } from '@kinetic-apps/icons';
 
 function MyComponent() {
   return (
@@ -74,7 +74,7 @@ For better tree-shaking and type safety, you can import icons directly:
 
 ```jsx
 // React/React Native
-import { heart, heartSolid } from '@kineticapps/icons';
+import { heart, heartSolid } from '@kinetic-apps/icons';
 
 function MyComponent() {
   const HeartIcon = heart;
@@ -94,7 +94,7 @@ function MyComponent() {
 The library includes full TypeScript support:
 
 ```typescript
-import { Icon, IconName, IconProps } from '@kineticapps/icons';
+import { Icon, IconName, IconProps } from '@kinetic-apps/icons';
 
 // IconName type includes all available icon names
 const iconName: IconName = 'heart';
@@ -108,7 +108,7 @@ const iconProps: IconProps = {
 };
 
 // Direct imports are also fully typed
-import { activity } from '@kineticapps/icons';
+import { activity } from '@kinetic-apps/icons';
 // activity: KineticIcon
 ```
 
@@ -135,7 +135,7 @@ The main component for rendering icons dynamically.
 Each icon can be imported as a separate component:
 
 ```jsx
-import { activity, activitySolid } from '@kineticapps/icons';
+import { activity, activitySolid } from '@kinetic-apps/icons';
 ```
 
 #### Props
@@ -202,7 +202,7 @@ function StatusIcon({ status }) {
 
 ```jsx
 import { View, TouchableOpacity } from 'react-native';
-import { Icon } from '@kineticapps/icons';
+import { Icon } from '@kinetic-apps/icons';
 
 function IconButton({ icon, onPress }) {
   return (
@@ -243,10 +243,10 @@ The library is designed to be tree-shakeable. When you import individual icons, 
 
 ```jsx
 // ✅ Good - only imports what you use
-import { heart, star } from '@kineticapps/icons';
+import { heart, star } from '@kinetic-apps/icons';
 
 // ⚠️ Less optimal - imports the Icon component logic
-import { Icon } from '@kineticapps/icons';
+import { Icon } from '@kinetic-apps/icons';
 ```
 
 ### Bundle Size

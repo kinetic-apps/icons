@@ -46,11 +46,11 @@ npm run release  # Semantic release (CI only)
 ### Import Methods
 ```typescript
 // Dynamic (runtime selection)
-import { Icon } from '@kineticapps/icons'
+import { Icon } from '@kinetic-apps/icons'
 <Icon name="heart" size={24} color="red" />
 
 // Tree-shakeable (optimal bundle size)
-import { heart, heartSolid } from '@kineticapps/icons'
+import { heart, heartSolid } from '@kinetic-apps/icons'
 ```
 
 ### Platform-Specific Handling
