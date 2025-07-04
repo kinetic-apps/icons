@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kinetic Icons - 1,525+ Beautiful Icons</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>⚡ Kinetic Icons</h1>
+                    <p>1,190+ beautiful icons for your projects</p>
+                </div>
+                <div class="stats">
+                    <span class="stat">
+                        <strong id="total-icons">1,525</strong> icons
+                    </span>
+                    <span class="stat">
+                        <strong id="solid-count">288</strong> solid
+                    </span>
+                    <span class="stat">
+                        <strong id="line-count">1,176</strong> line 1.5px
+                    </span>
+                    <span class="stat">
+                        <strong id="line2px-count">1,176</strong> line 2px
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="controls">
+                <div class="search-section">
+                    <div class="search-box">
+                        <input 
+                            type="text" 
+                            id="search-input" 
+                            placeholder="Search icons... (e.g., home, arrow, user)"
+                            autocomplete="off"
+                        >
+                        <button id="clear-search" class="clear-btn" style="display: none;">×</button>
+                    </div>
+                    <div class="search-results">
+                        <span id="results-count">All icons</span>
+                    </div>
+                </div>
+
+                <div class="variant-toggle">
+                    <button id="line-toggle" class="variant-btn active" data-variant="line">
+                        Line 1.5px
+                    </button>
+                    <button id="line2px-toggle" class="variant-btn" data-variant="line2px">
+                        Line 2px
+                    </button>
+                    <button id="solid-toggle" class="variant-btn" data-variant="solid">
+                        Solid
+                    </button>
+                </div>
+            </div>
+
+            <div class="icons-grid" id="icons-grid">
+                <!-- Icons will be populated by JavaScript -->
+            </div>
+
+            <div class="loading" id="loading">
+                Loading icons...
+            </div>
+
+            <div class="no-results" id="no-results" style="display: none;">
+                <h3>No icons found</h3>
+                <p>Try searching for something else or check your spelling.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Icon Detail Modal -->
+    <div class="modal" id="icon-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-icon-name">Icon Name</h3>
+                <button class="modal-close" id="modal-close">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="icon-preview">
+                    <div class="icon-display" id="modal-icon-display"></div>
+                </div>
+                <div class="icon-info">
+                    <div class="variants-info">
+                        <h4>Available Variants:</h4>
+                        <div class="variant-badges" id="modal-variants"></div>
+                    </div>
+                    <div class="usage-section">
+                        <h4>Usage:</h4>
+                        <div class="code-examples">
+                            <div class="code-block">
+                                <label>React Component:</label>
+                                <code id="react-code"></code>
+                                <button class="copy-btn" data-copy="react">Copy</button>
+                            </div>
+                            <div class="code-block">
+                                <label>Icon Name:</label>
+                                <code id="icon-name-code"></code>
+                                <button class="copy-btn" data-copy="name">Copy</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div class="toast" id="toast" style="display: none;">
+        Copied to clipboard!
+    </div>
+
+    <script src="icons-files.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
