@@ -1,136 +1,155 @@
 # Kinetic Icons MCP Server
 
-An authless MCP (Model Context Protocol) server that provides access to the Kinetic Icons library through AI assistants like Claude.
+A Model Context Protocol (MCP) server that provides AI assistants with access to the Kinetic Icons library. Search, discover, and get usage examples for over 1,500 high-quality icons.
 
 ## Features
 
-This MCP server exposes the following tools:
+- 🔍 **Search icons** by keyword (e.g., "arrow", "home", "user")
+- 📋 **List all icons** with optional filtering by style (line, solid)
+- ⚙️ **Get configuration** and usage examples
+- 📚 **Best practices** for implementing icons in your projects
+- 🎯 **Usage examples** for specific icons
 
-- **list_icons** - List all available icons with optional filtering by variant (line/solid)
-- **search_icons** - Search for icons by keyword
-- **get_icon_config** - Get all configuration options for the Icon component
-- **get_icon_usage_example** - Get usage examples for a specific icon
-- **get_best_practices** - Get comprehensive best practices guide
+## Quick Start
 
-## Local Development
+### With Cursor
 
-1. Install dependencies:
-```bash
-cd mcp-server
-npm install
-```
-
-2. Start the development server:
-```bash
-npm start
-```
-
-Your MCP server will be running at `http://localhost:8787/sse`
-
-3. Test with MCP Inspector:
-```bash
-npx @modelcontextprotocol/inspector@latest
-```
-
-Connect to `http://localhost:8787/sse` in the inspector.
-
-## Deployment to Cloudflare Workers
-
-1. Deploy the server:
-```bash
-npm run deploy
-```
-
-2. Your MCP server will be available at:
-```
-https://kinetic-icons-mcp-server.<your-account>.workers.dev/sse
-```
-
-## Connecting to Claude Desktop
-
-Add the following to your Claude Desktop configuration:
+1. Add to your Cursor MCP configuration (`~/.cursor/mcp.json`):
 
 ```json
 {
   "mcpServers": {
     "kinetic-icons": {
       "command": "npx",
-      "args": [
-        "mcp-remote",
-        "https://kinetic-icons-mcp-server.<your-account>.workers.dev/sse"
-      ]
+      "args": ["-y", "@elbibs18/kinetic-icons-mcp-server"],
+      "env": {}
     }
   }
 }
 ```
 
+2. Restart Cursor
+
+3. Start chatting with AI about icons:
+   - "Find arrow icons"
+   - "How do I use the home icon?"
+   - "What icons are available?"
+   - "Show me best practices for icon usage"
+
+### With Other MCP Clients
+
+```bash
+npx @elbibs18/kinetic-icons-mcp-server
+```
+
 ## Available Tools
 
-### 1. list_icons
-Lists all available icons with optional filtering.
-
-Parameters:
-- `category` (optional): "all", "line", or "solid"
-
-Example response:
-```json
-{
-  "totalIcons": 150,
-  "category": "line",
-  "icons": ["home", "user", "settings", ...]
-}
-```
-
-### 2. search_icons
+### `search_icons`
 Search for icons by keyword.
 
-Parameters:
-- `keyword` (required): Search term
+**Parameters:**
+- `keyword` (string, required): Search term
 
-Example response:
+**Example:**
 ```json
 {
-  "searchTerm": "user",
-  "resultsCount": 5,
-  "icons": ["user", "userCheck", "userEdit", "userPlus", "userX"]
+  "name": "search_icons",
+  "arguments": {
+    "keyword": "arrow"
+  }
 }
 ```
 
-### 3. get_icon_config
-Returns all configuration options for the Icon component.
+### `list_icons`
+List all available icons with optional filtering.
 
-No parameters required.
+**Parameters:**
+- `category` (string, optional): Filter by "all", "line", or "solid"
 
-### 4. get_icon_usage_example
+**Example:**
+```json
+{
+  "name": "list_icons",
+  "arguments": {
+    "category": "solid"
+  }
+}
+```
+
+### `get_icon_config`
+Get configuration options for using Kinetic Icons.
+
+### `get_best_practices`
+Get best practices for implementing icons in your projects.
+
+### `get_icon_usage_example`
 Get usage examples for a specific icon.
 
-Parameters:
-- `iconName` (required): Name of the icon
+**Parameters:**
+- `iconName` (string, required): Name of the icon
 
-Example response includes basic usage, variants, and direct import examples.
+## Icon Library
 
-### 5. get_best_practices
-Returns comprehensive best practices for using Kinetic Icons.
+The Kinetic Icons library includes:
+- **1,500+ icons** across multiple categories
+- **Line and solid variants** for most icons
+- **Consistent sizing** and styling
+- **React and React Native** components
+- **Tree-shaking support** for optimal bundle sizes
 
-No parameters required.
+## Usage Examples
 
-## Example Interactions with Claude
+### React
+```jsx
+import { Icon } from '@kinetic-apps/icons';
 
-Once connected, you can ask Claude:
+<Icon name="home" size="lg" color="blue" variant="solid" />
+```
 
-- "List all available icons in the Kinetic Icons library"
-- "Search for icons related to 'user'"
-- "Show me how to use the home icon"
-- "What are the configuration options for Kinetic Icons?"
-- "What are the best practices for using Kinetic Icons?"
+### React Native
+```jsx
+import { Icon } from '@kinetic-apps/icons/native';
 
-## Development Notes
+<Icon name="home" size={32} color="blue" variant="solid" />
+```
 
-- The server is built using Cloudflare's MCP Server SDK
-- No authentication is required (authless)
-- All tools are read-only and provide information about the icon library
-- The server automatically imports icon metadata from the main package
+### Individual Imports (Tree-shaking)
+```jsx
+import { HomeSolid } from '@kinetic-apps/icons';
+
+<HomeSolid size={32} color="blue" />
+```
+
+## Configuration
+
+### Icon Props
+- `name`: Icon name (required)
+- `size`: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | number
+- `color`: Color value (defaults to 'currentColor')
+- `variant`: 'line' | 'solid' | 'auto'
+- `strokeWidth`: Stroke width for line icons
+
+### Size Mapping
+- `xs`: 12px
+- `sm`: 16px
+- `md`: 24px (default)
+- `lg`: 32px
+- `xl`: 48px
+
+## Development
+
+This MCP server connects to the Kinetic Icons API hosted on Cloudflare Workers to provide real-time icon data and search capabilities.
 
 ## License
 
-This MCP server follows the same license as the @kineticapps/icons package.
+MIT
+
+## Links
+
+- [Kinetic Icons Repository](https://github.com/kinetic-apps/icons)
+- [Model Context Protocol](https://modelcontextprotocol.io/)
+- [Cursor Editor](https://cursor.sh/)
+
+---
+
+Made with ❤️ by Kinetic Apps

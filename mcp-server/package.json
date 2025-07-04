@@ -1,20 +1,46 @@
 {
-  "name": "@kineticapps/icons-mcp-server",
-  "version": "0.1.0",
-  "private": true,
+  "name": "@elbibs18/kinetic-icons-mcp-server",
+  "version": "1.0.2",
+  "private": false,
   "type": "module",
   "scripts": {
     "start": "wrangler dev",
     "deploy": "wrangler deploy",
-    "cf-typegen": "wrangler types"
+    "cf-typegen": "wrangler types",
+    "build": "tsc",
+    "mcp": "node dist/stdio-server.js"
   },
+  "bin": "dist/stdio-server.js",
+  "description": "Model Context Protocol (MCP) server for Kinetic Icons - search and discover icons for your projects",
+  "keywords": [
+    "mcp",
+    "icons",
+    "model-context-protocol",
+    "kinetic-icons",
+    "cursor",
+    "ai-tools"
+  ],
+  "author": "Kinetic Apps",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kinetic-apps/icons.git",
+    "directory": "mcp-server"
+  },
+  "homepage": "https://github.com/kinetic-apps/icons/tree/main/mcp-server",
+  "bugs": {
+    "url": "https://github.com/kinetic-apps/icons/issues"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md"
+  ],
   "dependencies": {
-    "@kineticapps/icons": "file:..",
-    "@modelcontextprotocol/sdk": "^1.14.0",
-    "zod": "^3.25.71"
+    "@modelcontextprotocol/sdk": "^1.14.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250115.1",
+    "@types/node": "^24.0.10",
     "typescript": "^5.0.0",
     "wrangler": "^3.99.0"
   }

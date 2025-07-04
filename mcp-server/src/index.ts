@@ -408,7 +408,7 @@ export default {
       // For POST requests, handle MCP messages
       if (request.method === "POST") {
         try {
-          const body = await request.json();
+          const body = await request.json() as MCPRequest;
           const response = await handleRequest(body);
           
           // Return as SSE format

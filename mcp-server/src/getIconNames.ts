@@ -1,4 +1,6 @@
 // This file extracts icon names without React dependencies
-import * as Icons from '../../src/components';
+// Note: This would normally import from components, but since we're using iconList.ts instead
+// we'll just re-export from there for compatibility
+import { iconNames as iconNamesFromList } from './iconList';
 
-export const iconNames = Object.keys(Icons).filter(key => key !== 'iconMetadata') as string[];
+export const iconNames = iconNamesFromList;
