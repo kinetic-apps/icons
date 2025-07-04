@@ -1,5 +1,5 @@
 {
-  "name": "@kinetic-apps/icons",
+  "name": "kinetic-icons-library",
   "version": "1.0.4",
   "description": "Kinetic Apps icon library",
   "main": "dist/index.js",
@@ -48,8 +48,7 @@
     "release": "semantic-release"
   },
   "publishConfig": {
-    "access": "restricted",
-    "registry": "https://npm.pkg.github.com"
+    "access": "public"
   },
   "repository": {
     "type": "git",

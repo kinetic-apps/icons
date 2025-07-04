@@ -15,6 +15,19 @@ function scanIconsDirectory() {
       .join(' ');
   }
 
+  // Helper function to convert kebab-case to camelCase for component names
+  function toCamelCase(fileName) {
+    return fileName
+      .split('-')
+      .map((word, index) => {
+        if (index === 0) {
+          return word.toLowerCase();
+        }
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      })
+      .join('');
+  }
+
   // Helper function to scan a directory for SVG files
   function scanDirectory(dir, variant) {
     try {
@@ -27,6 +40,7 @@ function scanIconsDirectory() {
           if (!iconData.has(fileName)) {
             iconData.set(fileName, {
               fileName: fileName,
+              componentName: toCamelCase(fileName),
               displayName: toDisplayName(fileName),
               variants: {}
             });
@@ -76,6 +90,7 @@ window.KINETIC_ICONS_FILES = [
 ${icons.map(icon => {
   return `  {
     "fileName": "${icon.fileName}",
+    "componentName": "${icon.componentName}",
     "displayName": "${icon.displayName}",
     "variants": {
       "line": ${icon.variants.line || false},

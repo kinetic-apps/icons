@@ -89,6 +89,7 @@ function handleSearch(e) {
         clearSearchBtn.style.display = 'block';
         filteredIcons = allIcons.filter(icon => 
             icon.fileName.toLowerCase().includes(currentSearchTerm) ||
+            icon.componentName.toLowerCase().includes(currentSearchTerm) ||
             icon.displayName.toLowerCase().includes(currentSearchTerm)
         );
     } else {
@@ -165,7 +166,7 @@ function createIconElement(icon) {
             <div class="icon-display">
                 ${createIconSVG(icon.fileName, currentVariant)}
             </div>
-            <div class="icon-name">${icon.displayName}</div>
+            <div class="icon-name">${icon.componentName}</div>
         </div>
     `;
 }
@@ -251,7 +252,7 @@ function openModal(fileName) {
     const icon = allIcons.find(i => i.fileName === fileName);
     if (!icon) return;
     
-    modalIconName.textContent = icon.displayName;
+    modalIconName.textContent = icon.componentName;
     modalIconDisplay.innerHTML = createIconSVG(fileName, currentVariant);
     
     // Load the SVG in the modal
@@ -275,10 +276,9 @@ function openModal(fileName) {
         </div>
     `;
     
-    // Update code examples - convert file name back to camelCase for React usage
-    const camelCaseName = fileName.replace(/-([a-z])/g, (match, letter) => letter.toUpperCase());
-    reactCode.textContent = `<Icon name="${camelCaseName}" size="md" />`;
-    iconNameCode.textContent = camelCaseName;
+    // Update code examples - use the componentName directly
+    reactCode.textContent = `<Icon name="${icon.componentName}" size="md" />`;
+    iconNameCode.textContent = icon.componentName;
     
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';

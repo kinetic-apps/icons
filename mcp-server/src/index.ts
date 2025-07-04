@@ -179,10 +179,14 @@ async function handleTool(name: string, args: any): Promise<any> {
     
     case "get_best_practices": {
       return {
+        installation: {
+          command: "npm install kinetic-icons-library",
+          note: "You must install the package first before using any icons"
+        },
         importingIcons: {
-          recommended: "import { Icon } from '@kineticapps/icons';",
+          recommended: "import { Icon } from 'kinetic-icons-library';",
           usage: "<Icon name=\"home\" size=\"md\" color=\"blue\" />",
-          directImport: "import { home } from '@kineticapps/icons/components';",
+          directImport: "import { home } from 'kinetic-icons-library/components';",
           note: "Direct imports give you more control but require handling variants manually"
         },
         sizingGuidelines: {
@@ -239,6 +243,8 @@ async function handleTool(name: string, args: any): Promise<any> {
           line: hasLine,
           solid: hasSolid
         },
+        installation: "npm install kinetic-icons-library",
+        import: "import { Icon } from 'kinetic-icons-library';",
         examples: {
           basic: `<Icon name="${baseName}" />`,
           withSize: `<Icon name="${baseName}" size="lg" />`,
@@ -249,8 +255,8 @@ async function handleTool(name: string, args: any): Promise<any> {
           styled: `<Icon name="${baseName}" style={{ marginRight: 8 }} />`
         },
         directImport: {
-          line: hasLine ? `import { ${baseName}1_5 } from '@kineticapps/icons';` : null,
-          solid: hasSolid ? `import { ${baseName}Solid } from '@kineticapps/icons';` : null,
+          line: hasLine ? `import { ${baseName}1_5 } from 'kinetic-icons-library';` : null,
+          solid: hasSolid ? `import { ${baseName}Solid } from 'kinetic-icons-library';` : null,
           usage: `<${baseName}1_5 size={24} color="blue" />`
         }
       };
