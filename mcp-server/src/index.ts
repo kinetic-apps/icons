@@ -203,27 +203,38 @@ async function handleTool(name: string, args: any): Promise<any> {
         throw new Error(`Icon "${args.iconName}" not found. Use 'search_icons' to find available icons.`);
       }
       
+      // For now, assume all icons have both line and solid variants
+      // This matches what the website shows - most icons have all variants
+      const availableVariants = {
+        line: true,
+        solid: true
+      };
+      
       return {
         iconName: args.iconName,
-        availableVariants: {
-          line: true,
-          solid: false
-        },
+        availableVariants,
         installation: "npm install kinetic-icons-library",
         import: "import { Icon } from 'kinetic-icons-library';",
         examples: {
           basic: `<Icon name="${iconName}" />`,
           withSize: `<Icon name="${iconName}" size="lg" />`,
           withColor: `<Icon name="${iconName}" color="#3B82F6" />`,
-          withVariant: null,
+          withVariant: `<Icon name="${iconName}" variant="solid" />`,
           customSize: `<Icon name="${iconName}" size={32} />`,
           withHandler: `<Icon name="${iconName}" onPress={() => console.log('Clicked!')} />`,
           styled: `<Icon name="${iconName}" style={{ marginRight: 8 }} />`
         },
         directImport: {
           line: `import { ${iconName}1_5 } from 'kinetic-icons-library';`,
-          solid: null,
+          solid: `import { ${iconName}Solid } from 'kinetic-icons-library';`,
           usage: `<${iconName}1_5 size={24} color="blue" />`
+        },
+        variantOptions: {
+          line: {
+            "1.5px": `<Icon name="${iconName}" variant="line" strokeWidth={1.5} />`,
+            "2px": `<Icon name="${iconName}" variant="line" strokeWidth={2} />`
+          },
+          solid: `<Icon name="${iconName}" variant="solid" />`
         }
       };
     }
