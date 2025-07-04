@@ -149,13 +149,13 @@ async function handleTool(name: string, args: any): Promise<any> {
     case "get_best_practices": {
       return {
         installation: {
-          command: "npm install kinetic-icons-library",
+          command: "npm install @kinetic-apps/icons",
           note: "You must install the package first before using any icons"
         },
         importingIcons: {
-          recommended: "import { Icon } from 'kinetic-icons-library';",
+          recommended: "import { Icon } from '@kinetic-apps/icons';",
           usage: "<Icon name=\"home\" size=\"md\" color=\"blue\" />",
-          directImport: "import { home } from 'kinetic-icons-library/components';",
+          directImport: "import { home } from '@kinetic-apps/icons';",
           note: "Direct imports give you more control but require handling variants manually"
         },
         sizingGuidelines: {
@@ -213,8 +213,8 @@ async function handleTool(name: string, args: any): Promise<any> {
       return {
         iconName: args.iconName,
         availableVariants,
-        installation: "npm install kinetic-icons-library",
-        import: "import { Icon } from 'kinetic-icons-library';",
+        installation: "npm install @kinetic-apps/icons",
+        import: "import { Icon } from '@kinetic-apps/icons';",
         examples: {
           basic: `<Icon name="${iconName}" />`,
           withSize: `<Icon name="${iconName}" size="lg" />`,
@@ -225,8 +225,8 @@ async function handleTool(name: string, args: any): Promise<any> {
           styled: `<Icon name="${iconName}" style={{ marginRight: 8 }} />`
         },
         directImport: {
-          line: `import { ${iconName}1_5 } from 'kinetic-icons-library';`,
-          solid: `import { ${iconName}Solid } from 'kinetic-icons-library';`,
+          line: `import { ${iconName}1_5 } from '@kinetic-apps/icons';`,
+          solid: `import { ${iconName}Solid } from '@kinetic-apps/icons';`,
           usage: `<${iconName}1_5 size={24} color="blue" />`
         },
         variantOptions: {
