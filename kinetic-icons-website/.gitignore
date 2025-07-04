@@ -1,5 +1,4 @@
-# Ignore the icons directory (it's copied from the main icons folder)
-icons/
+# Icons directory is needed for the website deployment
 
 # OS files
 .DS_Store
