@@ -1,6 +1,6 @@
 {
   "name": "@kinetic-apps/kinetic-icons-mcp-server",
-  "version": "1.0.10",
+  "version": "1.4.0",
   "private": false,
   "type": "module",
   "scripts": {
