@@ -14,23 +14,28 @@ A Model Context Protocol (MCP) server that provides AI assistants with access to
 
 ### With Cursor
 
-1. Add to your Cursor MCP configuration (`~/.cursor/mcp.json`):
+1. **Configure GitHub Packages access** (if not already done):
+   ```bash
+   npm login --scope=@kinetic-apps --auth-type=legacy --registry=https://npm.pkg.github.com
+   ```
+
+2. Add to your Cursor MCP configuration (`~/.cursor/mcp.json`):
 
 ```json
 {
   "mcpServers": {
     "kinetic-icons": {
       "command": "npx",
-      "args": ["-y", "@elbibs18/kinetic-icons-mcp-server"],
+      "args": ["-y", "@kinetic-apps/kinetic-icons-mcp-server"],
       "env": {}
     }
   }
 }
 ```
 
-2. Restart Cursor
+3. Restart Cursor
 
-3. Start chatting with AI about icons:
+4. Start chatting with AI about icons:
    - "Find arrow icons"
    - "How do I use the home icon?"
    - "What icons are available?"
@@ -39,7 +44,29 @@ A Model Context Protocol (MCP) server that provides AI assistants with access to
 ### With Other MCP Clients
 
 ```bash
-npx @elbibs18/kinetic-icons-mcp-server
+npx @kinetic-apps/kinetic-icons-mcp-server
+```
+
+## Installation
+
+This package is published to GitHub Packages. To use it:
+
+1. **Authenticate with GitHub Packages**:
+   ```bash
+   npm login --scope=@kinetic-apps --auth-type=legacy --registry=https://npm.pkg.github.com
+   ```
+
+2. **Install the package**:
+   ```bash
+   npm install @kinetic-apps/kinetic-icons-mcp-server
+   ```
+
+### Alternative: Using .npmrc
+
+Create a `.npmrc` file in your project root:
+```
+@kinetic-apps:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN
 ```
 
 ## Available Tools
