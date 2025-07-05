@@ -15,6 +15,16 @@ A Model Context Protocol (MCP) server that provides AI assistants with access to
 ### With Cursor
 
 1. **Configure GitHub Packages access** (if not already done):
+   
+   **Option A: Using Personal Access Token (Recommended)**
+   ```bash
+   # Create a GitHub Personal Access Token at https://github.com/settings/tokens
+   # Select scope: read:packages
+   echo "@kinetic-apps:registry=https://npm.pkg.github.com" >> ~/.npmrc
+   echo "//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN" >> ~/.npmrc
+   ```
+   
+   **Option B: Using npm login**
    ```bash
    npm login --scope=@kinetic-apps --auth-type=legacy --registry=https://npm.pkg.github.com
    ```
@@ -51,6 +61,27 @@ npx @kinetic-apps/kinetic-icons-mcp-server
 
 This package is published to GitHub Packages. To use it:
 
+### Method 1: Using Personal Access Token (Recommended)
+
+1. **Create a GitHub Personal Access Token**:
+   - Go to https://github.com/settings/tokens
+   - Generate new token (classic)
+   - Select scope: `read:packages`
+   - Copy the token
+
+2. **Configure authentication**:
+   ```bash
+   echo "@kinetic-apps:registry=https://npm.pkg.github.com" >> ~/.npmrc
+   echo "//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN" >> ~/.npmrc
+   ```
+
+3. **Install the package**:
+   ```bash
+   npm install @kinetic-apps/kinetic-icons-mcp-server
+   ```
+
+### Method 2: Using npm login
+
 1. **Authenticate with GitHub Packages**:
    ```bash
    npm login --scope=@kinetic-apps --auth-type=legacy --registry=https://npm.pkg.github.com
@@ -60,14 +91,6 @@ This package is published to GitHub Packages. To use it:
    ```bash
    npm install @kinetic-apps/kinetic-icons-mcp-server
    ```
-
-### Alternative: Using .npmrc
-
-Create a `.npmrc` file in your project root:
-```
-@kinetic-apps:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN
-```
 
 ## Available Tools
 
