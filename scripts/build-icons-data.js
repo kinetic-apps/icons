@@ -14,6 +14,11 @@ function toCamelCase(str, pascalCase = false) {
   return result;
 }
 
+// Convert hyphenated attribute names to camelCase for React Native
+function toCamelCaseAttr(key) {
+  return key.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+}
+
 // Convert SVG AST to IconNode format
 function convertToIconNode(element, parentAttrs = {}) {
   const nodes = [];
@@ -21,14 +26,16 @@ function convertToIconNode(element, parentAttrs = {}) {
   if (element.name && element.name !== 'svg') {
     const attrs = { ...element.attributes };
     
-    // Clean up attributes
+    // Convert hyphenated attributes to camelCase for React Native
+    const normalizedAttrs = {};
     Object.keys(attrs).forEach(key => {
-      if (attrs[key] === undefined || attrs[key] === null) {
-        delete attrs[key];
+      if (attrs[key] !== undefined && attrs[key] !== null) {
+        const camelKey = toCamelCaseAttr(key);
+        normalizedAttrs[camelKey] = attrs[key];
       }
     });
     
-    nodes.push([element.name, attrs]);
+    nodes.push([element.name, normalizedAttrs]);
   }
   
   if (element.children) {

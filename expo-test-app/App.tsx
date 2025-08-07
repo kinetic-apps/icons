@@ -17,7 +17,7 @@ const ICON_SIZE = (width - 60) / 4; // 4 columns with padding
 
 export default function App() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedVariant, setSelectedVariant] = useState<'all' | 'line' | 'solid'>('all');
+  const [selectedVariant, setSelectedVariant] = useState<'line' | 'solid'>('line');
   const [iconSize, setIconSize] = useState(24);
   const [iconColor, setIconColor] = useState('#000000');
 
