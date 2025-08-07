@@ -10,7 +10,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import * as Icons from '@kinetic-apps/icons';
+import * as Icons from '../src/icons-native';
 
 const { width } = Dimensions.get('window');
 const ICON_SIZE = (width - 60) / 4; // 4 columns with padding
@@ -71,7 +71,6 @@ export default function App() {
           .toLowerCase()
           .includes(searchTerm.toLowerCase());
         const matchesVariant =
-          selectedVariant === 'all' ||
           (selectedVariant === 'line' && icon.line) ||
           (selectedVariant === 'solid' && icon.solid);
         return matchesSearch && matchesVariant;
@@ -86,8 +85,6 @@ export default function App() {
       IconComponent = icon.line;
     } else if (selectedVariant === 'solid' && icon.solid) {
       IconComponent = icon.solid;
-    } else if (selectedVariant === 'all') {
-      IconComponent = icon.line || icon.solid;
     }
 
     if (!IconComponent) return null;
@@ -117,7 +114,7 @@ export default function App() {
         />
 
         <View style={styles.variantButtons}>
-          {(['all', 'line', 'solid'] as const).map((variant) => (
+          {(['line', 'solid'] as const).map((variant) => (
             <TouchableOpacity
               key={variant}
               style={[

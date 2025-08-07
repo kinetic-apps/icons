@@ -13,7 +13,14 @@ config.resolver.nodeModulesPaths = [
   path.resolve(parentDir, 'node_modules'),
 ];
 
-// Add support for .ts and .tsx extensions
-config.resolver.sourceExts.push('ts', 'tsx');
+// Configure react-native-svg-transformer
+config.transformer = {
+  ...config.transformer,
+  babelTransformerPath: require.resolve('react-native-svg-transformer'),
+};
+
+// Remove svg from asset extensions and add to source extensions
+config.resolver.assetExts = config.resolver.assetExts.filter((ext) => ext !== 'svg');
+config.resolver.sourceExts = [...config.resolver.sourceExts, 'svg', 'ts', 'tsx'];
 
 module.exports = config;
