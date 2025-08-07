@@ -1,6 +1,6 @@
 {
   "name": "@kinetic-apps/icons",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Kinetic Apps icon library",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
