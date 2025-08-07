@@ -44,3 +44,42 @@ reference-repos/
 *.generated.ts
 *.generated.tsx
 *.generated.js
+
+# TypeScript
+*.tsbuildinfo
+
+# Coverage and build artifacts
+coverage/
+build/
+.cache/
+.temp/
+
+# Expo / React Native
+.expo/
+.expo-shared/
+web-build/
+expo-env.d.ts
+.metro-health-check*
+
+# iOS (React Native / Xcode)
+**/ios/build/
+**/ios/DerivedData/
+**/ios/xcuserdata/
+**/*.xcuserstate
+**/*.xcscmblueprint
+**/ios/Pods/
+
+# Android (React Native / Gradle)
+**/android/.gradle/
+**/android/app/build/
+**/android/build/
+**/android/local.properties
+**/android/captures/
+**/android/.cxx/
+
+# Certificates and provisioning
+*.pem
+*.p8
+*.p12
+*.key
+*.mobileprovision
