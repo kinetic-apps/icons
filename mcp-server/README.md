@@ -14,23 +14,38 @@ A Model Context Protocol (MCP) server that provides AI assistants with access to
 
 ### With Cursor
 
-1. Add to your Cursor MCP configuration (`~/.cursor/mcp.json`):
+1. **Configure GitHub Packages access** (if not already done):
+   
+   **Option A: Using Personal Access Token (Recommended)**
+   ```bash
+   # Create a GitHub Personal Access Token at https://github.com/settings/tokens
+   # Select scope: read:packages
+   echo "@kinetic-apps:registry=https://npm.pkg.github.com" >> ~/.npmrc
+   echo "//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN" >> ~/.npmrc
+   ```
+   
+   **Option B: Using npm login**
+   ```bash
+   npm login --scope=@kinetic-apps --auth-type=legacy --registry=https://npm.pkg.github.com
+   ```
+
+2. Add to your Cursor MCP configuration (`~/.cursor/mcp.json`):
 
 ```json
 {
   "mcpServers": {
     "kinetic-icons": {
       "command": "npx",
-      "args": ["-y", "@elbibs18/kinetic-icons-mcp-server"],
+      "args": ["-y", "@kinetic-apps/kinetic-icons-mcp-server"],
       "env": {}
     }
   }
 }
 ```
 
-2. Restart Cursor
+3. Restart Cursor
 
-3. Start chatting with AI about icons:
+4. Start chatting with AI about icons:
    - "Find arrow icons"
    - "How do I use the home icon?"
    - "What icons are available?"
@@ -39,8 +54,43 @@ A Model Context Protocol (MCP) server that provides AI assistants with access to
 ### With Other MCP Clients
 
 ```bash
-npx @elbibs18/kinetic-icons-mcp-server
+npx @kinetic-apps/kinetic-icons-mcp-server
 ```
+
+## Installation
+
+This package is published to GitHub Packages. To use it:
+
+### Method 1: Using Personal Access Token (Recommended)
+
+1. **Create a GitHub Personal Access Token**:
+   - Go to https://github.com/settings/tokens
+   - Generate new token (classic)
+   - Select scope: `read:packages`
+   - Copy the token
+
+2. **Configure authentication**:
+   ```bash
+   echo "@kinetic-apps:registry=https://npm.pkg.github.com" >> ~/.npmrc
+   echo "//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN" >> ~/.npmrc
+   ```
+
+3. **Install the package**:
+   ```bash
+   npm install @kinetic-apps/kinetic-icons-mcp-server
+   ```
+
+### Method 2: Using npm login
+
+1. **Authenticate with GitHub Packages**:
+   ```bash
+   npm login --scope=@kinetic-apps --auth-type=legacy --registry=https://npm.pkg.github.com
+   ```
+
+2. **Install the package**:
+   ```bash
+   npm install @kinetic-apps/kinetic-icons-mcp-server
+   ```
 
 ## Available Tools
 
